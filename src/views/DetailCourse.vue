@@ -14,13 +14,13 @@
                 <div class="wf-container">
                     <label for="">Thumbnail:</label>
                     <div class="input-group mb-2">
-                        <input type="file" ref="thumbnail" placeholder="Ketik disini..." class="form-control">
-                        <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Upload</button>
+                        <input type="file" @change="handleThumbnail" ref="thumbnail" placeholder="Ketik disini..." class="form-control">
+                        <button class="btn btn-outline-secondary" @click="updateThumbnail" type="button" id="inputGroupFileAddon04">Simpan</button>
                     </div>
                     <label for="">Sertifikat:</label>
                     <div class="input-group mb-2">
-                        <input type="file" ref="thumbnail" placeholder="Ketik disini..." class="form-control">
-                        <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Upload</button>
+                        <input type="file" ref="certificate" @change="handleCertificate" placeholder="Ketik disini..." class="form-control">
+                        <button class="btn btn-outline-secondary" @click="updateCertificate" type="button" id="inputGroupFileAddon04">Simpan</button>
                     </div>
                     <hr>
                     <div class="form-group mb-2">
@@ -44,6 +44,7 @@
                 <div class="row mt-4">
 
                     <!-- Coupons -->
+                    
                     <div class="col-xl-6">
                         <h4 class="mb-3">Kupon</h4>
                         <div class="wf-items">
@@ -69,27 +70,23 @@
                         </div>
                     </div>
 
+                    <!-- End Coupons -->
+
                     <!-- Categories -->
+
                     <div class="col-xl-6">
                         <h4 class="mb-3">Kategori</h4>
                         <div class="wf-items">
-                            <div class="item">
-                                <div class="title">Fahmi</div>
-                                <div class="desc text-black-50">FrontEnd Developer</div>
+                            <div class="item" v-for="(v,i) in result.categories" :key="i">
+                                <div class="title">{{ v.name }}</div>
                             </div>
-                            <div class="item">
-                                <div class="title">Azman</div>
-                                <div class="desc text-black-50">FrontEnd Developer</div>
-                            </div>
-                            <div class="item">
-                                <div class="title">Fuad</div>
-                                <div class="desc text-black-50">BackEnd Developer</div>
-                            </div>
-                            <div class="item add">
+                            <div class="item add" @click="showModalAC">
                                 <div class="icon"><i class="fa fa-plus"></i></div>
                             </div>
                         </div>
                     </div>
+
+                    <!-- End Categories -->
                 </div>
             </div>
 
@@ -206,16 +203,39 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Modal Lesson -->
+
+        <div class="modal fade" ref="addCategory" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addCLLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addCLLabel">Tambah Lesson</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <select class="form-select" v-model="categoryForm.id" aria-label="Default select example">
+                                <option selected>Open this select menu</option>
+                                <option v-for="(v,i) in categories" :value="v.id" :key="i">{{ v.name }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button @click="addCategory" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </template>
 
 <script>
 import axios from 'axios';
 import swal from 'sweetalert';
-// import { createPopper } from '@popperjs/core';
-let bootstrap = require('bootstrap');
-let popper = require('@popperjs/core');
-// require('p')
+import * as bootstrap from 'bootstrap';
+
 axios.defaults.baseURL = 'http://localhost:8000/api';
 
 export default {
@@ -228,6 +248,9 @@ export default {
             chapterForm: {
                 name: '',
             },
+            categoryForm: {
+                id: -1,
+            },
             lessonForm: {
                 index: -1,
                 chapter_id: -1,
@@ -237,16 +260,80 @@ export default {
             emailMentor: '',
             modalChapter: null,
             modalLesson: null,
+            modalAC: null,
             chapterEmpty: true,
+            thumbnail: null,
+            certificate: null,
+            categories: [],
+            courseCategories: [],
+            errors: {
+
+            }
         }
     },
     methods: {
+        addCategory() {
+            axios.post(`/course/${this.id}/category/${this.categoryForm.id}`)
+            .then(r => {
+                console.log(r)
+                this.courseCategories.push(r.data.data);
+                    swal({
+                        title: "Berhasil",
+                        text: "Kategori Berhasil Ditambahkan!",
+                        icon: "success",
+                        button: "Baik",
+                    });
+            })
+        },
+        handleThumbnail() {
+            this.thumbnail = this.$refs.thumbnail.files[0];
+        },
+        handleCertificate() {
+            this.certificate = this.$refs.certificate.files[0];
+        },
+        updateThumbnail() {
+            if (this.thumbnail != null) {
+                let form = new FormData();
+                form.append('thumbnail', this.thumbnail);
+    
+                axios.post(`/course/${this.id}/thumbnail`, form)
+                .then(r => {
+                    console.log(r)
+                    swal({
+                        title: "Berhasil",
+                        text: "Chapter Berhasil Dibuat!",
+                        icon: "success",
+                        button: "Baik",
+                    });
+                })
+                .catch(e => {
+                    console.dir(e);
+                    swal({
+                        title: "Gagal",
+                        text: "Terdapat sesuatu yang bermasalah",
+                        icon: "error",
+                        button: "Baik",
+                    });
+                })
+                return true;
+            }
+            swal({
+                title: "Gagal Upload",
+                text: "Anda belum memasukan file!",
+                icon: "error",
+                button: "Baik",
+            });
+        },
+        updateCertificate() {
+
+        },
         createChapter() {
             this.chapterEmpty = false;
             axios.post('/chapter', {
                 name: this.chapterForm.name,
                 course_id: this.result.id,
             }).then(r => {
+                console.dir(r);
                 let chapter = r.data.data;
                 chapter.lesson = [];
                 this.result.chapter.push(chapter)
@@ -262,6 +349,8 @@ export default {
                     icon: "success",
                     button: "Baik",
                 });
+            }).catch(e => {
+                console.dir(e);
             })
         },
         deleteLesson(ci, li) {
@@ -347,6 +436,17 @@ export default {
                 keyboard: false
             })
             this.modalChapter.show();
+        },
+        showModalAC() {
+            this.modalAC = new bootstrap.Modal(this.$refs.addCategory, {
+                keyboard: false
+            })
+            axios.get('/category')
+            .then(r => {
+                console.log(r);
+                this.categories = r.data.data;
+            })
+            this.modalAC.show();
         }
     },
     async mounted() {

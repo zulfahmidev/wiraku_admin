@@ -21,7 +21,7 @@
         <div class="row courses mt-4">
             <div class="col-md-4" v-for="(v,i) in courses" :key="i">
                 <div class="course wf-container mb-4 text-center">
-                    <img v-if="v.thumbnail && v.thumbnail != ''" :src="`/upload/courses/thumbnail/${v.thumbnail}`" class="wf-media" alt="Course Image">
+                    <img v-if="v.thumbnail && v.thumbnail != ''" :src="`http://localhost:8000/upload/courses/thumbnail/${v.thumbnail}`" class="wf-media" alt="Course Image">
                     <h5 class="title">{{ v.name }}</h5>
                     <router-link :to="{name:'EditCourse', params: {id: v.id}}" class="btn btn-default mt-2">Edit</router-link>
                 </div>
@@ -33,7 +33,8 @@
             </div>
         </div>
 
-        <!-- Modal -->
+        <!-- Modal Tambah Course -->
+
         <div class="modal fade" ref="ModalAddCourse" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledref="ModalAddCourseLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -53,6 +54,7 @@
                 </div>
             </div>
         </div>
+
     </div>
     
 </template>

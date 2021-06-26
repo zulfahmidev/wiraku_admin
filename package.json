@@ -10,9 +10,7 @@
   "dependencies": {
     "@popperjs/core": "^2.9.2",
     "axios": "^0.21.1",
-    "bootstrap": "^5.0.2",
     "core-js": "^3.6.5",
-    "sass-loader": "^12.1.0",
     "sweetalert": "^2.1.2",
     "vue": "^3.0.0",
     "vue-router": "^4.0.10",
@@ -24,8 +22,14 @@
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0",
     "babel-eslint": "^10.1.0",
+    "bootstrap": "^5.0.2",
     "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^7.0.0"
+    "eslint-plugin-vue": "^7.12.1",
+    "jquery": "^3.6.0",
+    "popper.js": "^1.16.1",
+    "sass": "^1.35.1",
+    "sass-loader": "^12.1.0",
+    "scss": "^0.2.4"
   },
   "eslintConfig": {
     "root": true,
