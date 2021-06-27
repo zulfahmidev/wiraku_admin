@@ -27,14 +27,18 @@ export default {
     methods: {
         loginSuccess() {
             this.checkLogged();
-            console.log(this.$store.getters.isLogged);
         },
         checkLogged() {
             const userInfo = localStorage.getItem('user')
             if (userInfo) {
                 const userData = JSON.parse(userInfo)
+                let date = new Date();
+                let time = parseInt(`${date.getTime()}`.split('').slice(0,10).join(''));
                 this.$store.commit('setUserData', userData)
                 this.isLogged = true;
+                if (time >= parseInt(userData.expired_at)) {
+                    this.$store.dispatch('logout')
+                }
                 axios.interceptors.response.use(
                     response => response,
                     error => {
@@ -44,6 +48,7 @@ export default {
                     return Promise.reject(error)
                     }
                 )
+
             }
         },
     },

@@ -24,7 +24,7 @@
                     <img :src="`/upload/mentor/profile/${v.profile}`" class="wf-avatar" alt="Course Image">
                     <h5 class="name">{{ v.name }}</h5>
                     <p class="desc">{{ v.profesion }}</p>
-                    <div class="btn btn-default btn-block">EDIT</div>
+                    <div class="btn btn-default btn-block" @click="deleteMentor(i)">HAPUS</div>
                 </div>
             </div>
             <div class="col-md-4">
@@ -45,21 +45,12 @@
                 <div class="modal-body">
                     <div class="form-group mb-2">
                         <label for="email">Email:</label>
-                        <input v-model="create.email" type="text" id="email" class="form-control">
-                    </div>
-                    <div class="form-group mb-2">
-                        <label for="email">Kategori:</label>
-                        <select class="form-select" v-model="create.category_id" aria-label="Default select example">
-                            <option v-for="(v,i) in categories" :key="i" :value="v.id">{{ v.name }}</option>
-                        </select>
-                    </div>
-                    <div class="form-group mb-2">
-                        <label for="biography">Biografi:</label>
-                        <textarea id="biography" v-model="create.biography"  class="form-control"></textarea>
+                        <input v-model="create.email_user" @keydown.enter="createMentor" type="text" id="email" class="form-control">
+                        <div class="small text-danger" v-for="(v,i) in errors.add.email_user" :key="i">{{ v }}</div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" @click="createMentor" class="btn btn-primary">Buat Kelas</button>
+                    <button type="button" @click="createMentor" class="btn btn-primary">Tambah</button>
                 </div>
                 </div>
             </div>
@@ -78,33 +69,68 @@ export default {
             mentors: [],
             categories: [],
             create: {
-                email: '',
-                category_id: 0,
-                biography: '',
+                email_user: '',
                 modal: null,
             },
+            errors: {
+                add: {
+                    email_user: []
+                }
+            }
         }
     },
     methods: {
         showModalAdd() {
             this.create.modal.show();
         },
+        deleteMentor(i) {
+            event.preventDefault();
+            let conf = confirm('Apakah anda yakin ingin mengahapus mentor ini?')
+            if (conf) {
+                let mentor = this.mentors[i];
+                axios.delete(`/user/remove_mentor/${mentor.id}`).then(() => {
+                    this.mentors.splice(i,1);
+                    swal({
+                        title: "Berhasil",
+                        text: "Mentor berhasil dihapus!",
+                        icon: "success",
+                        button: "Baik",
+                    });
+                })
+                .catch(e => {
+                    console.dir(e);
+                })
+            }
+        },
         createMentor() {
             axios.post('/user/set_mentor', {
-                email_user: this.create.email,
-                category_id: this.create.category_id,
-                biography: this.create.biography,
-            }).then(r => {
-                console.log(r)
+                email_user: this.create.email_user,
+            }).then((r) => {
                 this.mentors.push(r.data.body)
+                this.create.modal.hide();
+                this.create.email_user = '';
                 swal({
                     title: "Berhasil",
-                    text: "Lesson Berhasil Dibuat!",
+                    text: "Mentor berhasil ditambahkan!",
                     icon: "success",
                     button: "Baik",
                 });
             }).catch(e => {
-                console.dir(e);
+                console.dir(e)
+                let r = e.response;
+                this.errors.add = {
+                    email_user: [],
+                };
+                if (r.status == 403) {
+                    let data = e.response.data.body;
+                    console.log(data);
+                    for (const key in data) {
+                        if (Object.hasOwnProperty.call(data, key)) {
+                            const val = data[key];
+                            this.errors.add[key] = val;
+                        }
+                    }
+                }
             })
         }
     },

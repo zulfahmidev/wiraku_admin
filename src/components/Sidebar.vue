@@ -34,5 +34,8 @@ export default {
             this.$store.dispatch('logout')
         }
     },
+    mounted() {
+        // console.log(this.$store._state.data.user);
+    }
 }
 </script>

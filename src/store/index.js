@@ -1,7 +1,7 @@
 import {createStore} from 'vuex';
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:8000/api';
+axios.defaults.baseURL = process.env.VUE_APP_SERVER_URL + "api/";
 
 export default createStore({
     state: {
@@ -12,6 +12,7 @@ export default createStore({
         setUserData (state, userData) {
             localStorage.setItem('user', JSON.stringify(userData));
             axios.defaults.headers.common.Authorization = `Bearer ${userData.token}`;
+            this.state.user = userData.user;
         },
 
         clearUserData() {
