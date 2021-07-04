@@ -45,7 +45,7 @@ export default {
                     if (error.response.status === 401) {
                         this.$store.dispatch('logout')
                     }
-                    return Promise.reject(error)
+                        return Promise.reject(error)
                     }
                 )
 

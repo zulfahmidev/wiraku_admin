@@ -24,6 +24,8 @@
 <body>
     <div id="app"></div>
 
+    <h2>Hello World</h2>
+    {{-- <script src="{{  }}"></script> --}}
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

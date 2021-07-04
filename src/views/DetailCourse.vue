@@ -15,13 +15,13 @@
                     <label for="">Thumbnail:</label>
                     <div class="input-group">
                         <input type="file" @change="handleThumbnail" ref="thumbnail" placeholder="Ketik disini..." class="form-control">
-                        <button class="btn btn-outline-secondary" @click="updateThumbnail" type="button" id="inputGroupFileAddon04">Simpan</button>
+                        <button class="btn btn-outline-primary" @click="updateThumbnail" type="button" id="inputGroupFileAddon04">Simpan</button>
                     </div>
                     <div class="small text-danger" v-for="(v,i) in errors.thumbnail.thumbnail" :key="i">{{ v }}</div>
                     <label for="" class="mt-2">Sertifikat:</label>
                     <div class="input-group">
                         <input type="file" ref="certificate" @change="handleCertificate" placeholder="Ketik disini..." class="form-control">
-                        <button class="btn btn-outline-secondary" @click="updateCertificate" type="button" id="inputGroupFileAddon04">Simpan</button>
+                        <button class="btn btn-outline-primary" @click="updateCertificate" type="button" id="inputGroupFileAddon04">Simpan</button>
                     </div>
                         <div class="small text-danger" v-for="(v,i) in errors.certificate.certificate" :key="i">{{ v }}</div>
                     <hr>
@@ -230,13 +230,12 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addCLLabel">Tambah Lesson</h5>
+                        <h5 class="modal-title" id="addCLLabel">Tambah Kategori</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
                             <select class="form-select" v-model="categoryForm.id" aria-label="Default select example">
-                                <option selected>Open this select menu</option>
                                 <option v-for="(v,i) in categories" :value="v.id" :key="i">{{ v.name }}</option>
                             </select>
                             <div class="small text-danger" v-if="errors.category != ''">{{ errors.category }}</div>
@@ -681,8 +680,8 @@ export default {
             })
             axios.get('/category')
             .then(r => {
-                console.log(r);
-                this.categories = r.data.data;
+                this.categories = r.data.body;
+                this.categoryForm.id = this.categories[0].id;
             })
             this.modalAC.show();
         },

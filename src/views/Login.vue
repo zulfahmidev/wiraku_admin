@@ -5,8 +5,8 @@
             <div class="logo"></div>
             <h2>Let's Begin</h2>
             <div class="wf-container">
-                <div v-if="error" class="alert alert-danger">
-                    Email atau Password anda salah!
+                <div v-if="error != ''" class="alert alert-danger">
+                    {{ error }}
                 </div>
                 <div class="form-group">
                     <label for="email">Your Email</label>
@@ -39,16 +39,23 @@ export default {
                 email: [],
                 password: [],
             },
-            error: false,
+            error: "",
         }
     },
     methods: {
         login() {
             this.$store.dispatch('login', {
-                email: this.email,
-                password: this.password,
-            }).then(() => {
-                this.$emit('success');
+                credentials: {
+                    email: this.email,
+                    password: this.password,
+                },
+                callback: (r) => {
+                    if (r.status == 403) {
+                        this.error = "Maaf, anda tidak diizinkan untuk masuk!"
+                    }else if(r.status == 200) {
+                        this.$emit('success')
+                    }
+                },
             }).catch(e => {
                 let r = e.response;
                 this.errors = {
@@ -64,10 +71,10 @@ export default {
                         }
                     }
                 } else {
-                    this.error = true;
+                    this.error = "Email atau Password anda salah!";
                 }
             });
-        }
+        },
     },
 }
 </script>

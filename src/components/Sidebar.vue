@@ -9,13 +9,13 @@
             </div>
             <div class="navs">
                 <SidebarNav name="Dashboard" text="Dashboard" icon="fa-tachometer-alt" />
-                <SidebarNav name="Courses" text="Courses" icon="fa-chalkboard" />
-                <SidebarNav name="Mentors" text="Mentors" icon="fa-user-tie"/>
-                <SidebarNav name="Transactions" text="Transactions" icon="fa-exchange-alt" />
-                <SidebarNav name="Settings" text="Settings" icon="fa-cog" />
+                <SidebarNav name="Courses" text="Kelas" icon="fa-chalkboard" />
+                <SidebarNav name="Mentors" text="Mentor" icon="fa-user-tie"/>
+                <SidebarNav name="Transactions" text="Transaksi" icon="fa-exchange-alt" />
+                <SidebarNav name="Settings" text="Pengaturan" icon="fa-cog" />
                 <div style="cursor: pointer" @click="logout" class="item">
                     <div class="icon"><i class="fa fa-sign-out-alt"></i></div>
-                    <div class="text">Sign Out</div>
+                    <div class="text">Keluar</div>
                 </div>
             </div>
         </div>

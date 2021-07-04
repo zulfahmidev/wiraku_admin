@@ -1,83 +1,166 @@
 <template>
     <div class="inner">
-        <h2>Transactions</h2>
+        <h2>Transaksi</h2>
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active" aria-current="page">Transactions</li>
+                <li class="breadcrumb-item active" aria-current="page">Transaksasi</li>
                 <li class="breadcrumb-item" aria-current="page"></li>
             </ol>
         </nav>
         <ul class="nav nav-pills categories">
-            <li class="nav-item active">
-                <a href="" class="nav-link">All</a>
+            <li :class="`nav-item ${(status == '') ? 'active' : ''}`">
+                <a href="#" @click="byStatus('')" class="nav-link">All</a>
             </li>
-            <li class="nav-item">
-                <a href="" class="nav-link">Panding</a>
+            <li :class="`nav-item ${(status == 'confirm') ? 'active' : ''}`">
+                <a href="#" @click="byStatus('confirm')" class="nav-link">Confirmed</a>
             </li>
-            <li class="nav-item">
-                <a href="" class="nav-link">Confirmed</a>
+            <li :class="`nav-item ${(status == 'unconfirm') ? 'active' : ''}`">
+                <a href="#" @click="byStatus('unconfirm')" class="nav-link">Panding</a>
             </li>
         </ul>
         <div class="wf-container mt-4">
-            <table id="transactions_table" class="table table-striped">
+            <div class="row">
+                <div class="col-lg-9">
+                    <h4>Daftar Transaksi</h4>
+                    <!-- <button class="btn btn-primary btn-sm"><i class="fa fa-plus fa-fw"></i> Tambah</button> -->
+                </div>
+                <div class="col-lg-3" style="text-align: right">
+                    <div class="input-group-sm">
+                        <input type="text" placeholder="Search..." v-model="searchKey" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <table id="transactions_table" class="table table-striped mt-3">
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Name</th>
-                        <th>Gmail</th>
-                        <th>Course</th>
-                        <th>Price</th>
-                        <th>Order At</th>
-                        <th>Actions</th>
+                        <th>Nama Kelas</th>
+                        <th>User Gmail</th>
+                        <th>Harga</th>
+                        <th>Tanggal</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Zulfahmi</td>
-                        <td>zulfahmineo@gmail.com</td>
-                        <td>Belajar Giat</td>
-                        <td>Rp 300,000</td>
-                        <td>11 Juni 2021</td>
+                    <tr v-for="(v,i) in getTransactions()" :key="i">
+                        <td>{{ i+1 }}</td>
+                        <td>{{ v.course.name }}</td>
+                        <td>{{ v.user.email }}</td>
+                        <td>{{ v.total }}</td>
+                        <td>{{ date_format(v.created_at) }}</td>
                         <td>
-                            <a href="" class="btn btn-success btn-sm"><i class="fa fa-check"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Zulfahmi</td>
-                        <td>zulfahmineo@gmail.com</td>
-                        <td>Belajar Giat</td>
-                        <td>Rp 300,000</td>
-                        <td>11 Juni 2021</td>
-                        <td>
-                            <a href="" class="btn btn-success btn-sm"><i class="fa fa-check"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Zulfahmi</td>
-                        <td>zulfahmineo@gmail.com</td>
-                        <td>Belajar Giat</td>
-                        <td>Rp 300,000</td>
-                        <td>11 Juni 2021</td>
-                        <td>
-                            <a href="" class="btn btn-dark btn-sm"><i class="far fa-clock"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Zulfahmi</td>
-                        <td>zulfahmineo@gmail.com</td>
-                        <td>Belajar Giat</td>
-                        <td>Rp 300,000</td>
-                        <td>11 Juni 2021</td>
-                        <td>
-                            <a href="" class="btn btn-success btn-sm"><i class="fa fa-check"></i></a>
+                            <button v-if="v.status != null" @click="switchStatus(i)" :class="`btn btn-success btn-sm`"><i class="fa fa-check"></i></button>
+                            <button v-if="v.status == null" @click="switchStatus(i)" :class="`btn btn-secondary btn-sm`"><i class="far fa-clock"></i></button>
                         </td>
                     </tr>
                 </tbody>
             </table>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li :class="`page-item ${pagination.page == 0 ? 'disabled' : ''}`">
+                        <a class="page-link" @click="setPage(pagination.page-1)" href="#">Previous</a>
+                    </li>
+                    <li :class="`page-item ${i-1 == pagination.page ? 'active' : ''}`" v-for="i in pagination.pages" :key="i"><a @click="setPage(i-1)" class="page-link" href="#">{{ i }}</a></li>
+                    <li :class="`page-item ${pagination.page+1 == pagination.pages ? 'disabled' : ''}`">
+                        <a class="page-link" @click="setPage(pagination.page+1)" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
 </template>
+
+<script>
+import axios from 'axios';
+import swal from 'sweetalert';
+export default {
+    data() {
+        return {
+            transactions: [],
+            status: '',
+            searchKey: '',
+            pagination: {
+                page: 0,
+                count: 5,
+                pages: 0,
+            }
+        };
+    },
+    methods: {
+        byStatus(status) {
+            event.preventDefault();
+            this.status = status;
+        },
+        setPage(page) {
+            event.preventDefault();
+            this.pagination.page = page;
+        },
+        getTransactions() {
+            let transactions = this.transactions.filter((v) => {
+                if (this.status == 'confirm') {
+                    if (v.status != null) return v;
+                }else if (this.status == 'unconfirm') {
+                    if (v.status == null) return v;
+                }else {
+                    return v;
+                }
+            });
+
+            if (this.searchKey.trim() != '') {
+                transactions = transactions.filter((v) => {
+                    return (
+                        v.course.name.toLowerCase().includes(this.searchKey.toLowerCase().trim()) ||
+                        v.user.email.toLowerCase().includes(this.searchKey.toLowerCase().trim()) ||
+                        `${v.total}`.toLowerCase().includes(this.searchKey.toLowerCase().trim())
+                    );
+                })
+            }
+
+            let rows = transactions.length;
+            let pages = Math.ceil(rows/this.pagination.count);
+            this.pagination.pages = pages;
+            let start = this.pagination.page*this.pagination.count;
+            transactions = transactions.splice(start, start+this.pagination.count);
+
+            return transactions;
+        },
+        date_format(v) {
+            let date = new Date(v);
+            return `${date.getDate()}-${date.getMonth()}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
+        },
+        getMeta(status) {
+            if (status == null) return {color: 'success', icon: ' fa fa-check'}; else return {color: 'secondary', icon: 'far fa-clock'};
+        },
+        switchStatus(i) {
+            let transaction = this.getTransactions()[i];
+            let msg = (transaction.status == null) ? 'konfirmasi' : 'membatalkan konfirmasi';
+            let conf = confirm(`Apakah anda yakin ingin ${msg} transaksi ini`);
+
+            if (conf) {
+                axios.post(`/transaction/${transaction.id}/switch_status`)
+                .then(r => {
+                    this.transactions[i] = r.data.body;
+                    swal({
+                        title: "Berhasil",
+                        text: "Status berhasil diubah",
+                        icon: "success",
+                        button: "Baik",
+                    });
+                }).catch(e => {
+                    console.dir(e)
+                })
+            }
+        }
+    },
+    async mounted() {
+        await axios.get('/transaction')
+        .then(r => {
+            this.transactions = r.data.body;
+            // $('#transaction_table').DataTable();
+        })
+        .catch(e => {
+            console.dir(e);
+        });
+    }
+}
+</script>

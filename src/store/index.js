@@ -22,14 +22,23 @@ export default createStore({
     },
 
     actions: {
-        login({commit}, credentials) {
+        login({commit}, request) {
             return axios
-            .post('/auth/login', credentials)
+            .post('/auth/login', request.credentials)
             .then(({ data }) => {
-                commit('setUserData', data)
+                if (data.user.roles != 'user') {
+                    commit('setUserData', data)
+                    request.callback({
+                        status: 200,
+                        data,
+                    }) 
+                }
+                request.callback({
+                    status: 403,
+                    data,
+                }) 
             });
         },
-
         logout({commit}) {
             axios.post('logout');
             commit('clearUserData');
