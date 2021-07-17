@@ -26,7 +26,7 @@ body {
 }
 
 .btn.btn-default {
-  background-color: #e94848;
+  background-color: #605dff;
   border: 0;
   width: 100%;
   color: #fff;
@@ -35,13 +35,13 @@ body {
 
 .btn.btn-default:hover {
   color: #fff;
-  background-color: #e99954;
+  background-color: #5061fd;
 }
 
 .form-control:focus {
-  border-color: #e94848 !important;
-  -webkit-box-shadow: 0 0 0 0.25rem rgba(233, 72, 72, 0.6) !important;
-          box-shadow: 0 0 0 0.25rem rgba(233, 72, 72, 0.6) !important;
+  border-color: #605dff !important;
+  -webkit-box-shadow: 0 0 0 0.25rem rgba(96, 93, 255, 0.6) !important;
+          box-shadow: 0 0 0 0.25rem rgba(96, 93, 255, 0.6) !important;
 }
 
 .wf-container {
@@ -97,7 +97,7 @@ body {
 .wf-items .item.add {
   padding: .4rem 1.2rem;
   background-color: transparent;
-  border: 2px solid #e94848;
+  border: 2px solid #605dff;
   display: block;
   width: 100%;
   text-align: center;
@@ -118,13 +118,13 @@ body {
   font-size: 12px;
   width: 24px;
   height: 24px;
-  color: #e94848;
-  border: 2px solid #e94848;
+  color: #605dff;
+  border: 2px solid #605dff;
   border-radius: 50%;
 }
 
 .wf-items .item.add:hover {
-  background-color: #e94848;
+  background-color: #605dff;
   color: #fff;
 }
 
@@ -134,7 +134,7 @@ body {
 }
 
 #wrapper {
-  background-color: #fff5f5;
+  background-color: #f1f6ff;
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 348px auto;
@@ -151,8 +151,8 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  color: #e94848;
-  border: 2px solid #e94848;
+  color: #605dff;
+  border: 2px solid #605dff;
   border-radius: 6px;
 }
 
@@ -171,7 +171,7 @@ body {
 }
 
 #wrapper .breadcrumb a {
-  color: #e94848;
+  color: #605dff;
   text-decoration: none;
 }
 
@@ -254,8 +254,8 @@ body {
 }
 
 #wrapper #sidebar .inner .navs .item.router-link-active .icon {
-  color: #e94848;
-  border: 2px solid #e94848;
+  color: #605dff;
+  border: 2px solid #605dff;
 }
 
 #wrapper #sidebar .inner .navs .item.router-link-active .text {
@@ -350,14 +350,14 @@ body {
           align-items: center;
   height: 100%;
   cursor: pointer;
-  color: #e94848;
+  color: #605dff;
 }
 
 #wrapper #content .inner .courses .add .icon {
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  border: 2px solid #e94848;
+  border: 2px solid #605dff;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -408,14 +408,14 @@ body {
       -ms-flex-align: center;
           align-items: center;
   height: 100%;
-  color: #e94848;
+  color: #605dff;
 }
 
 #wrapper #content .inner .mentors .add .icon {
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  border: 2px solid #e94848;
+  border: 2px solid #605dff;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -443,7 +443,7 @@ body {
   display: grid;
   -ms-grid-columns: 500px auto;
       grid-template-columns: 500px auto;
-  background-color: #fff5f5;
+  background-color: #f1f6ff;
   height: 100vh;
 }
 
@@ -487,7 +487,7 @@ body {
 }
 
 #login .main .form-group .form-control:focus {
-  border: 2px solid rgba(233, 72, 72, 0.8);
+  border: 2px solid rgba(96, 93, 255, 0.8);
 }
 
 #login .main .btn.btn-default {
@@ -496,7 +496,7 @@ body {
 }
 
 #login .main .btn.btn-default:active {
-  -webkit-box-shadow: 0 0 0 0.25rem rgba(233, 72, 72, 0.6) !important;
-          box-shadow: 0 0 0 0.25rem rgba(233, 72, 72, 0.6) !important;
+  -webkit-box-shadow: 0 0 0 0.25rem rgba(96, 93, 255, 0.6) !important;
+          box-shadow: 0 0 0 0.25rem rgba(96, 93, 255, 0.6) !important;
 }
 /*# sourceMappingURL=admin.css.map */

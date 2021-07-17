@@ -29,6 +29,7 @@ export default {
             this.checkLogged();
         },
         checkLogged() {
+            this.$router.push({name: 'Dashboard', params: []});
             const userInfo = localStorage.getItem('user')
             if (userInfo) {
                 const userData = JSON.parse(userInfo)
@@ -43,6 +44,7 @@ export default {
                     response => response,
                     error => {
                     if (error.response.status === 401) {
+                        this.$router.push({name: 'Dashboard', params: []});
                         this.$store.dispatch('logout')
                     }
                         return Promise.reject(error)

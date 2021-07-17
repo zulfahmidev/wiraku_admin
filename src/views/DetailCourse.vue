@@ -405,6 +405,15 @@ export default {
                     });
                     this.$router.push({name: 'Courses'});
                 })
+                .catch(e => {
+                    swal({
+                        title: "Gagal",
+                        text: "Telah terjadi kesalahan",
+                        icon: "danger",
+                        button: "Baik",
+                    });
+                    console.dir(e);
+                })
             }
         },
         addCoupon() {

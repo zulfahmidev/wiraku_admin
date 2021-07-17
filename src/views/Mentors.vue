@@ -107,7 +107,6 @@
 import axios from 'axios';
 import swal from 'sweetalert';
 let bootstrap = require('bootstrap');
-axios.defaults.baseURL = 'http://localhost:8000/api';
 export default {
     data() {
         return {

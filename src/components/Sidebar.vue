@@ -9,10 +9,11 @@
             </div>
             <div class="navs">
                 <SidebarNav name="Dashboard" text="Dashboard" icon="fa-tachometer-alt" />
-                <SidebarNav name="Courses" text="Kelas" icon="fa-chalkboard" />
-                <SidebarNav name="Mentors" text="Mentor" icon="fa-user-tie"/>
-                <SidebarNav name="Transactions" text="Transaksi" icon="fa-exchange-alt" />
-                <SidebarNav name="Settings" text="Pengaturan" icon="fa-cog" />
+                <SidebarNav v-if="isRole('admin')" name="Courses" text="Kelas" icon="fa-chalkboard" />
+                <SidebarNav v-if="isRole('admin')" name="Mentors" text="Mentor" icon="fa-user-tie"/>
+                <SidebarNav v-if="isRole('admin')" name="Transactions" text="Transaksi" icon="fa-exchange-alt" />
+                <SidebarNav v-if="isRole('superadmin')" name="Admin" text="Admin Manage" icon="fa-user-tie" />
+                <SidebarNav v-if="isRole('admin')" name="Settings" text="Pengaturan" icon="fa-cog" />
                 <div style="cursor: pointer" @click="logout" class="item">
                     <div class="icon"><i class="fa fa-sign-out-alt"></i></div>
                     <div class="text">Keluar</div>
@@ -32,9 +33,16 @@ export default {
     methods: {
         logout() {
             this.$store.dispatch('logout')
+            // setTimeout(()=>{
+            // }, 20)
+        },
+        isRole(role) {
+            let user = this.$store._state.data.user
+            return user.roles.toLowerCase() == role.toLowerCase();
         }
     },
     mounted() {
+        // console.log(this.$store);
         // console.log(this.$store._state.data.user);
     }
 }

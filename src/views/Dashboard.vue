@@ -12,5 +12,11 @@
 
 <script>
 export default {
+    async mounted() {
+        // fetch('https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/DigitalForecast-Aceh.xml')
+        // .then(r => {
+        //     console.log(r.body);
+        // })
+    }
 }
 </script>
