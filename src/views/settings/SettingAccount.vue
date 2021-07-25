@@ -49,10 +49,6 @@ export default {
     },
     methods: {
         saveChangePassword() {
-            let formdata = new URLSearchParams();
-            formdata.append('old_password', this.change_password_form.old_password);
-            formdata.append('new_password', this.change_password_form.new_password);
-            formdata.append('confirm_new_password', this.change_password_form.confirm_new_password);
             axios.post('/user/change_password', this.change_password_form)
             .then(r => {
                 console.dir(r);
