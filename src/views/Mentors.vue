@@ -25,7 +25,7 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Nama Kelas</th>
+                        <th>Nama</th>
                         <th>Email</th>
                         <th>Profesi</th>
                         <th>Hapus</th>
@@ -174,13 +174,17 @@ export default {
                 })
                 .catch(e => {
                     console.dir(e);
+                    swal({
+                        title: "ERROR",
+                        text: "Something went wrong!",
+                        icon: "error",
+                        button: "Close",
+                    });
                 })
             }
         },
         createMentor() {
-            axios.post('/user/set_mentor', {
-                email_user: this.create.email_user,
-            }).then((r) => {
+            axios.post('/user/set_mentor/'+this.create.email_user).then((r) => {
                 this.mentors.push(r.data.body)
                 this.create.modal.hide();
                 this.create.email_user = '';
@@ -192,6 +196,12 @@ export default {
                 });
             }).catch(e => {
                 console.dir(e)
+                swal({
+                    title: "ERROR",
+                    text: "Something went wrong!",
+                    icon: "error",
+                    button: "Close",
+                });
                 let r = e.response;
                 this.errors.add = {
                     email_user: [],

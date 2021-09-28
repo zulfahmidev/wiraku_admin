@@ -109,13 +109,9 @@
                 <!-- Main Button Add -->
 
                 <div :class="`btn-group dropdown`" v-if="chapterEmpty" id="addBtn">
-                    <button type="button" class="btn btn-primary btn-block dropdown-toggle" style="width: 100%;" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button type="button" class="btn btn-primary btn-block" style="width: 100%;" @click="showModalChapter">
                         <i class="fa fa-plus fa-fw"></i>
                     </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" @click="showModalChapter" href="#"><i class="fa fa-plus fa-fw"></i> <b>Chapter</b></a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fa fa-plus fa-fw"></i> <b>Lesson</b></a></li>
-                    </ul>
                 </div>
                 
                 <!-- End Main Button Add -->
@@ -151,15 +147,9 @@
 
                     <!-- Button Add -->
 
-                    <div class="btn-group dropdown" id="addBtn">
-                        <button type="button" class="btn btn-primary btn-block dropdown-toggle" style="width: 100%;" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa fa-plus fa-fw"></i>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" @click="showModalChapter" href="#"><i class="fa fa-plus fa-fw"></i> <b>Chapter</b></a></li>
-                            <li><a class="dropdown-item" @click="showModalLesson(i)" href="#"><i class="fa fa-plus fa-fw"></i> <b>Lesson</b></a></li>
-                        </ul>
-                    </div>
+                    <button type="button" class="btn btn-primary btn-block" @click="showModalMA(i)" style="width: 100%;" aria-expanded="false">
+                        <i class="fa fa-plus fa-fw"></i>
+                    </button>
 
                     <!-- End Button Add -->
 
@@ -279,6 +269,31 @@
                     </div>
                     <div class="modal-footer">
                         <button @click="addCoupon" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- End Modal Category -->
+        
+        <!-- Modal Category -->
+
+        <div class="modal fade" ref="menuAdd" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="menuAdd" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title small" id="menuAdd">Pilih yang ingin ditambahkan</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <button class="btn btn-primary w-100 btn-sm" @click="showModalChapter">Chapter</button>
+                            </div>
+                            <div class="col-6">
+                                <button class="btn btn-primary w-100 btn-sm" @click="showModalLesson">Lesson</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -583,6 +598,9 @@ export default {
                         button: "Baik",
                     });
                 })
+                .catch(e => {
+                    console.dir(e)
+                })
             }
         },
         deleteCoupon(i) {
@@ -619,6 +637,7 @@ export default {
             })
             .catch(e => {
                 let r = e.response;
+                console.dir(e);
                 this.errors.lesson = {
                     name: [],
                     url: [],
@@ -631,16 +650,25 @@ export default {
                             this.errors.lesson[key] = val;
                         }
                     }
+                }else {
+                    // this.modalLesson.hide();
+                    swal({
+                        title: "ERROR",
+                        text: "Something went wrong!",
+                        icon: "error",
+                        button: "Close",
+                    });
                 }
             })
         },
-        showModalLesson(i) {
-            this.lessonForm.index = i;
-            let chapter = this.result.chapter[i];
+        showModalLesson() {
+            let chapter = this.result.chapter[this.lessonForm.index];
+            console.log(this.lessonForm);
             this.lessonForm.chapter_id = chapter.id;
             this.lessonChapter = new bootstrap.Modal(this.$refs.lessonChapter, {
                 keyboard: false
             })
+            this.modalMenuAdd.hide();
             this.lessonChapter.show();
         },
         saveChange() {
@@ -681,6 +709,7 @@ export default {
             this.modalChapter = new bootstrap.Modal(this.$refs.modalChapter, {
                 keyboard: false
             })
+            this.modalMenuAdd.hide();
             this.modalChapter.show();
         },
         showModalAC() {
@@ -700,6 +729,13 @@ export default {
                 keyboard: false
             })
             this.modalCoupon.show();
+        },
+        showModalMA(i = -1) {
+            this.lessonForm.index = i;
+            this.modalMenuAdd = new bootstrap.Modal(this.$refs.menuAdd, {
+                keyboard: false
+            })
+            this.modalMenuAdd.show();
         }
     },
     async mounted() {

@@ -38,7 +38,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>Nama Kelas</th>
-                                <th>Hapus</th>
+                                <th>Ubah</th>
                             </tr>
                         </thead>
                         <tbody>
