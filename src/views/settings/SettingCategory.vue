@@ -114,4 +114,5 @@ export default {
 .categories-badge .item .delete:hover {
     opacity: 1;
 }
+
 </style>

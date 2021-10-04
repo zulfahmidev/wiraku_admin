@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.9.2",
+    "apexcharts": "^3.28.3",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "css-loader": "^6.3.0",
@@ -17,6 +18,7 @@
     "vue": "^3.0.0",
     "vue-datatables-net": "^1.5.2",
     "vue-router": "^4.0.10",
+    "vue3-apexcharts": "^1.4.1",
     "vuex": "^4.0.2"
   },
   "devDependencies": {
