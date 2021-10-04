@@ -43,37 +43,32 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style>
 
     .setting-item {
         text-decoration: none;
 
-        .icon {
-            font-size: 40px;
-            border-radius: 50%;
-            background-color: #605dff !important;
-            width: 80px;
-            height: 80px;
-            display: flex;
-            color: #fff;
-            align-items: center;
-            justify-content: center;
-            margin: 1rem auto;
-        }
+    }
+    .setting-item .icon {
+        font-size: 40px;
+        border-radius: 50%;
+        background-color: #605dff !important;
+        width: 80px;
+        height: 80px;
+        display: flex;
+        color: #fff;
+        align-items: center;
+        justify-content: center;
+        margin: 1rem auto;
+    }
 
-        .h5 {
-            color: #000000;
-            opacity: .5;
-        }
-        
-        &:hover {
-            .icon {
-            //    background-color: rgba(13,110,253,.25) !important;
-            }
-            .h5 {
-                opacity: .8;
-            }
-        }
+    .setting-item .h5 {
+        color: #000000;
+        opacity: .5;
+    }
+
+    .setting-item:hover .h5 {
+        opacity: .8;
     }
 
 </style>
