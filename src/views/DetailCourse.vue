@@ -279,7 +279,7 @@
         <!-- Modal Category -->
 
         <div class="modal fade" ref="menuAdd" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="menuAdd" aria-hidden="true">
-            <div class="modal-dialog modal-sm">
+            <div class="modal-dialog modal-sm modal-center">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title small" id="menuAdd">Pilih yang ingin ditambahkan</h5>
@@ -668,7 +668,7 @@ export default {
             this.lessonChapter = new bootstrap.Modal(this.$refs.lessonChapter, {
                 keyboard: false
             })
-            this.modalMenuAdd.hide();
+            if (this.modalMenuAdd) this.modalMenuAdd.hide();
             this.lessonChapter.show();
         },
         saveChange() {
@@ -709,7 +709,7 @@ export default {
             this.modalChapter = new bootstrap.Modal(this.$refs.modalChapter, {
                 keyboard: false
             })
-            this.modalMenuAdd.hide();
+            if (this.modalMenuAdd) this.modalMenuAdd.hide();
             this.modalChapter.show();
         },
         showModalAC() {
@@ -741,13 +741,14 @@ export default {
     async mounted() {
         await axios.get(`/course/${this.id}`)
         .then(r => {
-            this.emailMentor = r.data.data.mentor.email;
+            let mentor = r.data.data.mentor;
+            this.emailMentor = (mentor) ? mentor.email : '';
             this.result = r.data.data;
             this.chapterEmpty = this.result.chapter.length == 0;
         })
         .catch((r) => {
             console.dir(r);
-            this.$router.back();
+            // this.$router.back();
         })
     },
 }
