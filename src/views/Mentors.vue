@@ -13,7 +13,7 @@
         <div class="wf-container mt-4">
             <div class="row">
                 <div class="col-lg-9">
-                    <button class="btn btn-primary btn-sm" @click="showModalAdd"><i class="fa fa-plus fa-fw"></i> Tambah</button>
+                    <button class="btn btn-default btn-sm" @click="showModalAdd"><i class="fa fa-plus fa-fw"></i> Tambah</button>
                 </div>
                 <div class="col-lg-3" style="text-align: right">
                     <div class="input-group-sm">

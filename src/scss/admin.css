@@ -134,7 +134,7 @@ body {
 }
 
 #wrapper {
-  background-color: #fff5f5;
+  background-color: #aaa;
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 348px auto;
@@ -439,18 +439,13 @@ body {
 }
 
 #login {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: 500px auto;
-      grid-template-columns: 500px auto;
-  background-color: #fff5f5;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   height: 100vh;
-}
-
-#login .banner {
-  height: 100%;
-  background-size: cover;
-  background-position: center center;
 }
 
 #login .main {

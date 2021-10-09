@@ -1,5 +1,5 @@
 <template>
-    <div class="inner">
+    <div class="inner" id="settings">
         <h2>Pengaturan</h2>
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -42,33 +42,3 @@ export default {
     },
 }
 </script>
-
-<style>
-
-    .setting-item {
-        text-decoration: none;
-
-    }
-    .setting-item .icon {
-        font-size: 40px;
-        border-radius: 50%;
-        background-color: #605dff !important;
-        width: 80px;
-        height: 80px;
-        display: flex;
-        color: #fff;
-        align-items: center;
-        justify-content: center;
-        margin: 1rem auto;
-    }
-
-    .setting-item .h5 {
-        color: #000000;
-        opacity: .5;
-    }
-
-    .setting-item:hover .h5 {
-        opacity: .8;
-    }
-
-</style>
