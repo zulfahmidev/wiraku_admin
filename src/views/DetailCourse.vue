@@ -45,8 +45,8 @@
                         <input type="text" v-model="emailMentor" placeholder="Ketik disini..." class="form-control">
                         <div class="small text-danger" v-for="(v,i) in errors.detail.email_mentor" :key="i">{{ v }}</div>
                     </div>
-                    <div class="btn btn-default mt-2 btn-block" @click="saveChange">Simpan Perubahan</div>
-                    <div class="btn btn-default mt-2 btn-block" @click="deleteCourse">Hapus Kelas</div>
+                    <div class="btn btn-default mt-2 btn-block w-100" @click="saveChange">Simpan Perubahan</div>
+                    <div class="btn btn-default mt-2 btn-block w-100" @click="deleteCourse">Hapus Kelas</div>
                 </div>
                 <div class="row mt-4">
 
@@ -109,7 +109,7 @@
                 <!-- Main Button Add -->
 
                 <div :class="`btn-group dropdown`" v-if="chapterEmpty" id="addBtn">
-                    <button type="button" class="btn btn-primary btn-block" style="width: 100%;" @click="showModalChapter">
+                    <button type="button" class="btn btn-default btn-block" style="width: 100%;" @click="showModalChapter">
                         <i class="fa fa-plus fa-fw"></i>
                     </button>
                 </div>
@@ -147,7 +147,7 @@
 
                     <!-- Button Add -->
 
-                    <button type="button" class="btn btn-primary btn-block" @click="showModalMA(i)" style="width: 100%;" aria-expanded="false">
+                    <button type="button" class="btn btn-default btn-block" @click="showModalMA(i)" style="width: 100%;" aria-expanded="false">
                         <i class="fa fa-plus fa-fw"></i>
                     </button>
 

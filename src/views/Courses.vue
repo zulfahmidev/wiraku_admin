@@ -20,55 +20,51 @@
         </ul> -->
 
 
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="wf-container">
-                    <div class="row">
-                        <div class="col-lg-8">
-                            <button class="btn btn-primary btn-sm" @click="showAddModal"><i class="fa fa-plus fa-fw"></i> Tambah</button>
-                        </div>
-                        <div class="col-lg-4" style="text-align: right">
-                            <div class="input-group-sm">
-                                <input type="text" placeholder="Search..." v-model="searchKey" class="form-control">
-                            </div>
-                        </div>
+        <div class="wf-container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <button class="btn btn-default btn-sm" @click="showAddModal"><i class="fa fa-plus fa-fw"></i> Tambah</button>
+                </div>
+                <div class="col-lg-4" style="text-align: right">
+                    <div class="input-group-sm">
+                        <input type="text" placeholder="Search..." v-model="searchKey" class="form-control">
                     </div>
-                    <table id="transactions_table" class="table table-striped mt-3">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Nama Kelas</th>
-                                <th>Ubah</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(v,i) in getCourses()" :key="i">
-                                <td>{{ i+1 }}</td>
-                                <td>{{ v.name }}</td>
-                                <td>
-                                    <router-link :to="{name:'EditCourse', params: {id: v.id}}" class="btn btn-sm btn-success"><i class="fa fa-edit fa-fw"></i></router-link>
-                                </td>
-                                <!-- <td>{{ date_format(v.created_at) }}</td> -->
-                                <!-- <td>
-                                    <button v-if="v.status != null" @click="switchStatus(i)" :class="`btn btn-success btn-sm`"><i class="fa fa-check"></i></button>
-                                    <button v-if="v.status == null" @click="switchStatus(i)" :class="`btn btn-secondary btn-sm`"><i class="far fa-clock"></i></button>
-                                </td> -->
-                            </tr>
-                        </tbody>
-                    </table>
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-center">
-                            <li :class="`page-item ${pagination.page == 0 ? 'disabled' : ''}`">
-                                <a class="page-link" @click="setPage(pagination.page-1)" href="#">Previous</a>
-                            </li>
-                            <li :class="`page-item ${i-1 == pagination.page ? 'active' : ''}`" v-for="i in pagination.pages" :key="i"><a @click="setPage(i-1)" class="page-link" href="#">{{ i }}</a></li>
-                            <li :class="`page-item ${pagination.page+1 == pagination.pages ? 'disabled' : ''}`">
-                                <a class="page-link" @click="setPage(pagination.page+1)" href="#">Next</a>
-                            </li>
-                        </ul>
-                    </nav>
                 </div>
             </div>
+            <table id="transactions_table" class="table table-striped mt-3">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nama Kelas</th>
+                        <th>Ubah</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(v,i) in getCourses()" :key="i">
+                        <td>{{ i+1 }}</td>
+                        <td>{{ v.name }}</td>
+                        <td>
+                            <router-link :to="{name:'EditCourse', params: {id: v.id}}" class="btn btn-sm btn-success"><i class="fa fa-edit fa-fw"></i></router-link>
+                        </td>
+                        <!-- <td>{{ date_format(v.created_at) }}</td> -->
+                        <!-- <td>
+                            <button v-if="v.status != null" @click="switchStatus(i)" :class="`btn btn-success btn-sm`"><i class="fa fa-check"></i></button>
+                            <button v-if="v.status == null" @click="switchStatus(i)" :class="`btn btn-secondary btn-sm`"><i class="far fa-clock"></i></button>
+                        </td> -->
+                    </tr>
+                </tbody>
+            </table>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li :class="`page-item ${pagination.page == 0 ? 'disabled' : ''}`">
+                        <a class="page-link" @click="setPage(pagination.page-1)" href="#">Previous</a>
+                    </li>
+                    <li :class="`page-item ${i-1 == pagination.page ? 'active' : ''}`" v-for="i in pagination.pages" :key="i"><a @click="setPage(i-1)" class="page-link" href="#">{{ i }}</a></li>
+                    <li :class="`page-item ${pagination.page+1 == pagination.pages ? 'disabled' : ''}`">
+                        <a class="page-link" @click="setPage(pagination.page+1)" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
 
         <!-- <div class="row courses mt-4">

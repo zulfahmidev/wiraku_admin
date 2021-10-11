@@ -134,7 +134,7 @@ body {
 }
 
 #wrapper {
-  background-color: #aaa;
+  background-color: #fff5f5;
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 348px auto;
@@ -443,7 +443,7 @@ body {
   display: grid;
   -ms-grid-columns: 500px auto;
       grid-template-columns: 500px auto;
-  background-color: #aaa;
+  background-color: #fff5f5;
   height: 100vh;
 }
 
@@ -499,4 +499,4 @@ body {
   -webkit-box-shadow: 0 0 0 0.25rem rgba(233, 72, 72, 0.6) !important;
           box-shadow: 0 0 0 0.25rem rgba(233, 72, 72, 0.6) !important;
 }
-/*# sourceMappingURL=admin.css.map */
+/*# sourceMappingURL=admin copy.css.map */

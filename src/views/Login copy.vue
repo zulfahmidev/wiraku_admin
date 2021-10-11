@@ -1,12 +1,10 @@
 <template>
     <div id="login">
-        <!-- <div class="banner" style="background-image: url('/img/637982.jpg');"></div> -->
-        <div class="main text-center">
-            <div class="logo">
-                <img src="/img/logo.png" alt="Logo Wiraku">
-            </div>
-            <!-- <h2>Let's Begin</h2> -->
-            <div class="wf-container shadow">
+        <div class="banner" style="background-image: url('/img/637982.jpg');"></div>
+        <div class="main">
+            <div class="logo"></div>
+            <h2>Let's Begin</h2>
+            <div class="wf-container">
                 <div v-if="error != ''" class="alert alert-danger">
                     {{ error }}
                 </div>
@@ -20,7 +18,7 @@
                     <input type="password" @keydown.enter="login" v-model="password" id="password" class="form-control">
                     <small class="text-danger" v-for="(v,i) in errors.password" :key="i">{{ v }}</small>
                 </div>
-                <button @click="login" style="width: 100%" class="btn btn-default btn-block">Login</button>
+                <button @click="login" class="btn btn-default btn-block">Login</button>
             </div>
         </div>
     </div>

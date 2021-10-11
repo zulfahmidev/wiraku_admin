@@ -26,7 +26,7 @@
                         <input type="password" v-model="change_password_form.confirm_new_password" class="form-control">
                     </div>
                     <div class="form-group mb-2">
-                        <button class="btn btn-primary btn-block w-100" @click="saveChangePassword">SIMPAN</button>
+                        <button class="btn btn-default btn-block w-100" @click="saveChangePassword">SIMPAN</button>
                     </div>
                 </div>
             </div>

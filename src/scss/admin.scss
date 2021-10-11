@@ -16,7 +16,7 @@
 $dark: #503b3b;
 $default: #e94848;
 $default-dark: #e99954;
-$default-light: #fff5f5;
+$default-light: #aaa;
 $grey: #aaa;
 
 body {
@@ -352,15 +352,10 @@ body {
 }
 
 #login {
-    display: grid;
-    grid-template-columns: 500px auto;
-    background-color: $default-light;
+    display: flex;
+    // background-color: $default-light;
+    align-items: center;
     height: 100vh;
-    .banner {
-        height: 100%;
-        background-size: cover;
-        background-position: center center;
-    }
     .main {
         width: 400px;
         margin: auto;
