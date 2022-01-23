@@ -5,7 +5,7 @@
                 <div class="avatar">
                     <img src="/img/637960.jpg" class="wf-media" alt="avatar">
                 </div>
-                <div class="name">Noname</div>
+                <div class="name">Risqillah</div>
             </div>
             <div class="navs">
                 <SidebarNav name="Dashboard" text="Dashboard" icon="fa-tachometer-alt" />
