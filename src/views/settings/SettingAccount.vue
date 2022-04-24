@@ -29,6 +29,27 @@
                         <button class="btn btn-default btn-block w-100" @click="saveChangePassword">SIMPAN</button>
                     </div>
                 </div>
+                
+            </div>
+            <div class="col-lg-6">
+                <div class="wf-container">
+                    <h4># Profil</h4>
+                    
+                    <label for="">Foto Profil:</label>
+                    <div class="input-group">
+                        <input type="file" @change="handlephotoProfil" ref="photoProfil" placeholder="Ketik disini..." class="form-control">
+                        <button class="btn btn-outline-primary" @click="updatephotoProfil" type="button" id="inputGroupFileAddon04">Simpan</button>
+                    </div>
+                    
+                    <div class="form-group my-2">
+                        <label for="">Nama: </label>
+                        <input type="password" v-model="change_password_form.old_password" class="form-control">
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <button class="btn btn-default btn-block w-100" @click="saveChangePassword">SIMPAN</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -44,12 +65,13 @@ export default {
                 old_password: '',
                 new_password: '',
                 confirm_new_password: '',
-            }
+            },
+            photoProfil:null
         }
     },
     methods: {
         saveChangePassword() {
-            axios.post('/user/change_password', this.change_password_form)
+            axios.post('/user/changepassword', this.change_password_form)
             .then(r => {
                 console.dir(r);
                 this.change_password_form = {
@@ -73,7 +95,39 @@ export default {
                     button: "Baik",
                 });
             })
-        }
+        },
+        handlephotoProfil() {
+            this.photoProfil = this.$refs.photoProfil.files[0];
+        },
+        updatephotoProfil() {
+            let form = new FormData();
+            form.append('photoProfil', this.photoProfil);
+
+            axios.post(`/course/${this.id}/photoProfil`, form)
+            .then(() => {
+                swal({
+                    title: "Berhasil",
+                    text: "photoProfil berhasil diubah!",
+                    icon: "success",
+                    button: "Baik",
+                });
+            })
+            .catch((e) => {
+                let r = e.response;
+                this.errors.photoProfil = [];
+                if (r.status == 403) {
+                    let data = e.response.data.body;
+                    this.errors.photoProfil = data;
+                }else {
+                    swal({
+                        title: "Gagal Upload",
+                        text: "Telah terjadi sesuatu kesalahan!",
+                        icon: "error",
+                        button: "Baik",
+                    });
+                }
+            })
+        },
     },
     mounted() {
     },

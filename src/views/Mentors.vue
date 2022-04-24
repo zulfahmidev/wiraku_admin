@@ -38,13 +38,8 @@
                         <td>{{ v.email }}</td>
                         <td>{{ (v.category != null) ? v.category.name : 'Tidak Punya' }}</td>
                         <td>
-                            <div class="btn btn-danger btn-sm" @click="deleteMentor(i)"><i class="fa fa-fw fa-trash"></i></div>
+                            <div class="btn btn-danger btn-sm" @click="deleteMentor(i,v.id)"><i class="fa fa-fw fa-trash"></i></div>
                         </td>
-                        <!-- <td>{{ date_format(v.created_at) }}</td> -->
-                        <!-- <td>
-                            <button v-if="v.status != null" @click="switchStatus(i)" :class="`btn btn-success btn-sm`"><i class="fa fa-check"></i></button>
-                            <button v-if="v.status == null" @click="switchStatus(i)" :class="`btn btn-secondary btn-sm`"><i class="far fa-clock"></i></button>
-                        </td> -->
                     </tr>
                 </tbody>
             </table>
@@ -61,25 +56,6 @@
             </nav>
         </div>
 
-        <!--  -->
-
-        <!-- <div class="row mentors mt-4">
-            <div v-for="(v,i) in mentors" :key="i" class="col-md-4">
-                <div class="mentor text-center wf-container mb-4">
-                    <img :src="`/upload/mentor/profile/${v.profile}`" class="wf-avatar" alt="Course Image">
-                    <h5 class="name">{{ v.name }}</h5>
-                    <p class="desc">{{ v.profesion }}</p>
-                    <div class="btn btn-default btn-block" @click="deleteMentor(i)">HAPUS</div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="add wf-container" @click="showModalAdd">
-                    <div class="icon"><i class="fa fa-plus"></i></div>
-                </div>
-            </div>
-        </div> -->
-
-        <!-- Modal -->
         <div class="modal fade" ref="ModalAddMentor" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledref="ModalAddMentorLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -158,12 +134,14 @@ export default {
         showModalAdd() {
             this.create.modal.show();
         },
-        deleteMentor(i) {
+        deleteMentor(i,id) {
             event.preventDefault();
             let conf = confirm('Apakah anda yakin ingin mengahapus mentor ini?')
             if (conf) {
-                let mentor = this.mentors[i];
-                axios.delete(`/user/remove_mentor/${mentor.id}`).then(() => {
+                // let mentor = this.mentors[i];
+                axios.delete(`/user/mentor/remove_mentor/${id}`)
+                .then(r => {
+                    console.log(r)
                     this.mentors.splice(i,1);
                     swal({
                         title: "Berhasil",

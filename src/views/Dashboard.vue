@@ -57,7 +57,6 @@ export default {
                     row[dt.getDay()]++;
                 }
             })
-                    console.log(row);
             this.options = {
                 chart: {
                     id: 'statistik_penjualan'

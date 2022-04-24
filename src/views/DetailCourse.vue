@@ -466,6 +466,7 @@ export default {
         },
         handleThumbnail() {
             this.thumbnail = this.$refs.thumbnail.files[0];
+            console.log('asdas',this.$refs.thumbnail.files[0])
         },
         handleCertificate() {
             this.certificate = this.$refs.certificate.files[0];
@@ -572,6 +573,7 @@ export default {
             if (conf) {
                 let chapter = this.result.chapter[ci];
                 let lesson = chapter.lesson[li];
+                // console.log(lesson)
                 axios.delete('/lesson/'+lesson.id).then(() => {
                     this.result.chapter[ci].lesson.splice(li,1);
                     swal({
