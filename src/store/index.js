@@ -42,23 +42,23 @@ export default createStore({
         checklogged({commit}) {
             const userInfo = localStorage.getItem('user')
             if (userInfo) {
-              const userData = JSON.parse(userInfo)
-              let date = new Date();
-              let time = parseInt(`${date.getTime()}`.split('').slice(0,10).join(''));
-              commit('setUserData', userData)
-              this.login = true;
-              if (time >= parseInt(userData.expired_at)) {
-                  this.dispatch('logout')
-              }
-              axios.interceptors.response.use(
-                response => response,
-                error => {
-                  if (error.response.status === 401) {
+                const userData = JSON.parse(userInfo)
+                let date = new Date();
+                let time = parseInt(`${date.getTime()}`.split('').slice(0,10).join(''));
+                commit('setUserData', userData)
+                this.login = true;
+                if (time >= parseInt(userData.expired_at)) {
                     this.dispatch('logout')
-                  }
-                  return Promise.reject(error)
                 }
-              )
+                axios.interceptors.response.use(
+                    response => response,
+                    error => {
+                        if (error.response.status === 401) {
+                        this.dispatch('logout')
+                        }
+                        return Promise.reject(error)
+                    }
+                )
             }
         },
         logout({commit}) {

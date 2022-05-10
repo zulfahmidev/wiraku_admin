@@ -3,9 +3,9 @@
         <div class="inner">
             <div class="header">
                 <div class="avatar">
-                    <img src="/img/637960.jpg" class="wf-media" alt="avatar">
+                    <img :src="`../../wiraku/public/upload/user/profile_image/`+profile_image" class="wf-media" alt="avatar">
                 </div>
-                <div class="name">Risqillah</div>
+                <div class="name">{{name}}</div>
             </div>
             <div class="navs">
                 <SidebarNav name="Dashboard" text="Dashboard" icon="fa-tachometer-alt" />
@@ -27,6 +27,13 @@
 import SidebarNav from './SidebarNav.vue';
 
 export default {
+    data(){
+        return{
+            userInfo : null,
+            name:null,
+            profile_image:null
+        }
+    },
     components: {
         SidebarNav,
     },
@@ -41,9 +48,11 @@ export default {
             return user.roles.toLowerCase() == role.toLowerCase();
         }
     },
+
     mounted() {
-        // console.log(this.$store);
-        // console.log(this.$store._state.data.user);
+        this.userInfo = JSON.parse(localStorage.getItem('user'));
+        this.name=this.userInfo.user.name
+        this.profile_image =this.userInfo.user.profile_image 
     }
 }
 </script>

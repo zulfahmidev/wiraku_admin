@@ -37,8 +37,8 @@
                     
                     <label for="">Foto Profil:</label>
                     <div class="input-group">
-                        <input type="file" @change="handlephotoProfil" ref="photoProfil" placeholder="Ketik disini..." class="form-control">
-                        <button class="btn btn-outline-primary" @click="updatephotoProfil" type="button" id="inputGroupFileAddon04">Simpan</button>
+                        <input type="file" @change="handleprofile_image" ref="profile_image" placeholder="Ketik disini..." class="form-control">
+                        <button class="btn btn-outline-primary" @click="updateprofile_image" type="button" id="inputGroupFileAddon04">Simpan</button>
                     </div>
                     
                     <div class="form-group my-2">
@@ -66,7 +66,8 @@ export default {
                 new_password: '',
                 confirm_new_password: '',
             },
-            photoProfil:null
+            profile_image:null
+            
         }
     },
     methods: {
@@ -96,28 +97,31 @@ export default {
                 });
             })
         },
-        handlephotoProfil() {
-            this.photoProfil = this.$refs.photoProfil.files[0];
+        handleprofile_image() {
+            this.profile_image = this.$refs.profile_image.files[0];
         },
-        updatephotoProfil() {
+        updateprofile_image() {
+            console.log('simpan boss')
+            var userInfo = JSON.parse(localStorage.getItem('user'));
             let form = new FormData();
-            form.append('photoProfil', this.photoProfil);
+            console.log('profile image ',this.profile_image)
+            form.append('profile_image', this.profile_image);
 
-            axios.post(`/course/${this.id}/photoProfil`, form)
+            axios.post(`/user/profile_image/${userInfo.user.id}`, form)
             .then(() => {
                 swal({
                     title: "Berhasil",
-                    text: "photoProfil berhasil diubah!",
+                    text: "photo Profil berhasil diubah!",
                     icon: "success",
                     button: "Baik",
                 });
             })
             .catch((e) => {
                 let r = e.response;
-                this.errors.photoProfil = [];
+                this.errors.profile_image = [];
                 if (r.status == 403) {
                     let data = e.response.data.body;
-                    this.errors.photoProfil = data;
+                    this.errors.profile_image = data;
                 }else {
                     swal({
                         title: "Gagal Upload",

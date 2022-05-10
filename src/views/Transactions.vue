@@ -11,11 +11,11 @@
             <li :class="`nav-item ${(status == '') ? 'active' : ''}`">
                 <a href="#" @click="byStatus('')" class="nav-link">All</a>
             </li>
-            <li :class="`nav-item ${(status == 'confirm') ? 'active' : ''}`">
-                <a href="#" @click="byStatus('confirm')" class="nav-link">Confirmed</a>
+            <li :class="`nav-item ${(status == 'Active') ? 'active' : ''}`">
+                <a href="#" @click="byStatus('Active')" class="nav-link">Aktif</a>
             </li>
-            <li :class="`nav-item ${(status == 'unconfirm') ? 'active' : ''}`">
-                <a href="#" @click="byStatus('unconfirm')" class="nav-link">Panding</a>
+            <li :class="`nav-item ${(status == 'Pending') ? 'active' : ''}`">
+                <a href="#" @click="byStatus('Pending')" class="nav-link">Panding</a>
             </li>
         </ul>
         <div class="wf-container mt-4">
@@ -49,8 +49,8 @@
                         <td>{{ v.total }}</td>
                         <td>{{ date_format(v.created_at) }}</td>
                         <td>
-                            <button v-if="v.status != null" @click="switchStatus(i)" :class="`btn btn-success btn-sm`"><i class="fa fa-check"></i></button>
-                            <button v-if="v.status == null" @click="switchStatus(i)" :class="`btn btn-secondary btn-sm`"><i class="far fa-clock"></i></button>
+                            <button v-if="v.status == 'Active'" @click="switchStatus(i)" :class="`btn btn-success btn-sm`"><i class="fa fa-check"></i></button>
+                            <button v-if="v.status == 'Pending'" @click="switchStatus(i)" :class="`btn btn-secondary btn-sm`"><i class="far fa-clock"></i></button>
                         </td>
                     </tr>
                 </tbody>
@@ -97,10 +97,10 @@ export default {
         },
         getTransactions() {
             let transactions = this.transactions.filter((v) => {
-                if (this.status == 'confirm') {
-                    if (v.status != null) return v;
-                }else if (this.status == 'unconfirm') {
-                    if (v.status == null) return v;
+                if (this.status == 'Active') {
+                    if (v.status == 'Active') return v;
+                }else if (this.status == 'Pending') {
+                    if (v.status == 'Pending') return v;
                 }else {
                     return v;
                 }
@@ -133,7 +133,7 @@ export default {
         },
         switchStatus(i) {
             let transaction = this.getTransactions()[i];
-            let msg = (transaction.status == null) ? 'konfirmasi' : 'membatalkan konfirmasi';
+            let msg = (transaction.status == "Pending") ? 'konfirmasi' : 'membatalkan konfirmasi';
             let conf = confirm(`Apakah anda yakin ingin ${msg} transaksi ini`);
 
             if (conf) {

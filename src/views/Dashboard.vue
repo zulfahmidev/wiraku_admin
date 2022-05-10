@@ -20,10 +20,6 @@
             </div>
             <apexchart type="line" height="300" :options="options" :series="series"></apexchart>
         </div>
-        <!-- <div class="row">
-            <div class="col-lg-6">
-            </div>
-        </div> -->
     </div>
 </template>
 
