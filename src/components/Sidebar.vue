@@ -11,7 +11,10 @@
                 <SidebarNav name="Dashboard" text="Dashboard" icon="fa-tachometer-alt" />
                 <SidebarNav v-if="isRole('admin')" name="Courses" text="Kelas" icon="fa-chalkboard" />
                 <SidebarNav v-if="isRole('admin')" name="Mentors" text="Mentor" icon="fa-user-tie"/>
+                <SidebarNav v-if="isRole('admin')" name="trend" text="Trend Tooday!" icon="fa-hashtag" />
                 <SidebarNav v-if="isRole('admin')" name="Transactions" text="Transaksi" icon="fa-exchange-alt" />
+                <SidebarNav v-if="isRole('admin')" name="lapkeuangan" text="Laporan Keuangan" icon="fa-book" />
+                <!-- <SidebarNav v-if="isRole('admin')" name="Laporankeuangan" text="Laporan Keuangan" icon="fa-book" /> -->
                 <SidebarNav v-if="isRole('superadmin')" name="Admin" text="Admin Manage" icon="fa-user-tie" />
                 <SidebarNav v-if="isRole('admin')" name="Settings" text="Pengaturan" icon="fa-cog" />
                 <div style="cursor: pointer" @click="logout" class="item">

@@ -3,7 +3,7 @@
         <h2>Transaksi</h2>
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active" aria-current="page">Transaksasi</li>
+                <li class="breadcrumb-item active" aria-current="page">Transaksi</li>
                 <li class="breadcrumb-item" aria-current="page"></li>
             </ol>
         </nav>

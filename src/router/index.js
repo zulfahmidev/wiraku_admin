@@ -7,6 +7,8 @@ import CreateCourse from '../views/course/CreateCourse.vue'
 
 import DetailCourse from '../views/DetailCourse.vue';
 import Mentors from '../views/Mentors.vue';
+import trend from '../views/trend.vue';
+import lapkeuangan from '../views/lapkeuangan.vue';
 import Transactions from '../views/Transactions.vue';
 import Admin from '../views/Admin.vue';
 import Settings from '../views/Settings.vue';
@@ -62,6 +64,22 @@ const router = createRouter({
       path: '/mentor',
       name: 'Mentors',
       component: Mentors,
+      meta: {
+        forRole: 'admin',
+      }
+    },
+    {
+      path: '/trend',
+      name: 'trend',
+      component: trend,
+      meta: {
+        forRole: 'admin',
+      }
+    },
+    {
+      path: '/lapkeuangan',
+      name: 'lapkeuangan',
+      component: lapkeuangan,
       meta: {
         forRole: 'admin',
       }
