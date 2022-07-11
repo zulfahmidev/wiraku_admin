@@ -3,7 +3,7 @@
         <div class="inner">
             <div class="header">
                 <div class="avatar">
-                    <img :src="`../../wiraku/public/upload/user/profile_image/`+profile_image" class="wf-media" alt="avatar">
+                    <img :src="'../../wiraku/public/upload/user/profile_image/'+profile_image" class="wf-media" alt="avatar">
                 </div>
                 <div class="name">{{name}}</div>
             </div>
@@ -55,7 +55,8 @@ export default {
     mounted() {
         this.userInfo = JSON.parse(localStorage.getItem('user'));
         this.name=this.userInfo.user.name
-        this.profile_image =this.userInfo.user.profile_image 
+        this.profile_image =this.userInfo.user.profile_image
+        console.log('image',this.profile_image)
     }
 }
 </script>
