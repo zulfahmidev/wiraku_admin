@@ -21,23 +21,27 @@
                     </div>
                 </div>
                 
-                 <div class="form-group">
-                        <label for="name">Kode Kelas:</label>
-                        <input type="text" v-model="change_data.course_id" class="form-control">
+                <div class="form-group my-2">
+                        <label for="">course_id:</label>
+                        <input type="text" v-model="result.course_id" placeholder="Ketik disini..." class="form-control">
+                        <div class="small text-danger" v-for="(v,i) in errors.detail.course_id" :key="i">{{ v }}</div>
                     </div>
-                      <div class="form-group mt-2">
-                        <label for="mentor">Input Pengeluaran:   </label>
-                        <input type="text" v-model="change_data.pengeluaran" class="form-control">
+                    <div class="form-group mb-2">
+                        <label for="">Pemasukan:</label>
+                        <input type="number" v-model="result.pemasukan" placeholder="Ketik disini..." class="form-control">
+                        <div class="small text-danger" v-for="(v,i) in errors.detail.pemasukan" :key="i">{{ v }}</div>
                     </div>
-                    <div class="form-group mt-2">
-                        <label for="mentor">Keterangan  </label>
-                        <input type="text" v-model="change_data.ket" class="form-control">
+                       <div class="form-group mb-2">
+                        <label for="">Pengeluaran:</label>
+                        <input type="number" v-model="result.pengeluaran" placeholder="Ketik disini..." class="form-control">
+                        <div class="small text-danger" v-for="(v,i) in errors.detail.pengeluaran" :key="i">{{ v }}</div>
                     </div>
-                    <hr>
-                    <div class="form-group mt-2">
-                            <button class="btn btn-default btn-block w-100" @click="saveData">Tambah Pengeluaran</button>
+                     <div class="form-group my-2">
+                        <label for="">keterangan:</label>
+                        <input type="text" v-model="result.keterangan" placeholder="Ketik disini..." class="form-control">
+                        <div class="small text-danger" v-for="(v,i) in errors.detail.keterangan" :key="i">{{ v }}</div>
                     </div>
-                    
+                    <div class="btn btn-default mt-2 btn-block w-100" @click="tambahpengeluaran">Tambah Pengeluaran</div>
             </div>
             <table id="transactions_table" class="table table-striped mt-3">
                 <thead>
@@ -53,12 +57,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(v,i) in getTransactions()" :key="i">
-                        <td>{{ i+1 }}</td>
-                        <td>{{ v.course.name }}</td>
-                        <td>{{ v.user.email }}</td>
-                        <td>{{ v.total }}</td>
-                        <td>{{ date_format(v.created_at) }}</td>
+                    <tr v-for="(v,i) in datakeuangan" :key="i">
+                        <td>{{i+1}}</td>
+                        <td>{{ v.course_id}}</td>
+                        <td>{{ v.pengeluaran }}</td>
+                        <td>{{ v.pemasukan }}</td>
+                        <td>{{ v.saldo }}</td>
+                        <td>{{ v.keterangan }}</td>
+                        <td>{{date_format(v.created_at)}}</td>
                    
                     </tr>
                 </tbody>
@@ -74,41 +80,69 @@ import swal from 'sweetalert';
 export default {
     data() {
         return {
-            change_data: {
-                course_id: '',
-                pengeluaran: '',
-                ket: '',
-            }
+            result: {},
+              detail: {
+                    course_id: [],
+                    pemasukan: [],
+                    pengeluaran: [],
+                    keterangan: [],
+              },
+            datakeuangan:[]
             
         }
     },
     methods: {
-        saveData() {
-            axios.post('/user/changepassword', this.change_data)
-            .then(r => {
-                console.dir(r);
-                this.change_data = {
-                     course_id: '',
-                    pengeluaran: '',
-                    ket: '',
-                }
+
+        getdata(){
+           axios.get('/keuangan')
+            .then(r=>{                
+                this.datakeuangan=r.data[0]
+                console.log(this.datakeuangan)
+            })
+        },
+        date_format(v) {
+            let date = new Date(v);
+            return `${date.getDate()}-${date.getMonth()}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
+        },
+           tambahpengeluaran() {
+            axios.post('/tambahpengeluaran', {
+                course_id: this.result.course_id,
+                pemasukan: this.result.pemasukan,
+                pengeluaran: this.result.pengeluaran,
+                keteranga: this.keterangan,
+                
+            }).then(() => {
+                // Berhasil
                 swal({
                     title: "Berhasil",
-                    text: r.data.message,
+                    text: "Perubahan Telah Disimpan!",
                     icon: "success",
                     button: "Baik",
                 });
-            })
-            .catch(e => {
+            }).catch(e => {
                 console.dir(e);
-                swal({
-                    title: "Gagal",
-                    text: e.response.data.message,
-                    icon: "danger",
-                    button: "Baik",
-                });
+                let r = e.response;
+                this.errors.detail = {
+                    name: [],
+                    price: [],
+                    description: [],
+                    email_mentor: [],
+                };
+                if (r.status == 403) {
+                    let data = e.response.data.body;
+                    for (const key in data) {
+                        if (Object.hasOwnProperty.call(data, key)) {
+                            const val = data[key];
+                            this.errors.detail[key] = val;
+                        }
+                    }
+                }
             })
         }
+  
+    },
+    mounted(){
+        this.getdata()
     }
 }
 </script>

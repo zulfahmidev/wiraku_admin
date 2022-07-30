@@ -14,6 +14,7 @@ import Admin from '../views/Admin.vue';
 import Settings from '../views/Settings.vue';
 import SettingCategory from '../views/settings/SettingCategory.vue';
 import SettingAccount from '../views/settings/SettingAccount.vue';
+import tambahpengeluaran from '../views/lapkeuangan.vue'
 
 const router = createRouter({
   history: createWebHistory('/'),
@@ -116,6 +117,11 @@ const router = createRouter({
         forRole: 'admin',
       }
     },
+    {
+      path:'/tambahpengeluaran',
+      name:'pengeluaran',
+      component :tambahpengeluaran
+    }
   ]
 })
 

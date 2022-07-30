@@ -8,6 +8,7 @@
             </ol>
         </nav>
         <div class="wf-container">
+        <div class="wf-container mt-4">
             <div class="row">
                 <div class="col-lg-8">
                     <button class="btn btn-default btn-sm" @click="showAddModal"><i class="fa fa-plus fa-fw"></i> Tambah</button>
@@ -48,7 +49,8 @@
                 </ul>
             </nav>
         </div>
-
+        </div>
+ 
         <div class="modal fade" ref="ModalAddCourse" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledref="ModalAddCourseLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">

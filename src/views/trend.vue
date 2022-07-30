@@ -48,6 +48,11 @@
                 <hr>
                 <div class="row mt-3 ">
                 </div>
+                <h5 class="mt-3">Akurasi Trend Hari Ini</h5>
+                <div >{{prediksi[5][0].jml_tweet}} %</div>
+                <hr>
+                <div class="row mt-3 ">
+                </div>
                 <div class="col-lg-4" style="text-align: right" >
                          <button class="btn btn-default btn-block w-100" @click="AmbilData">Ambil data Twitter</button>
                  </div>

@@ -20,6 +20,9 @@
             </div>
             <apexchart type="line" height="300" :options="options" :series="series"></apexchart>
         </div>
+        <br>
+        <h4 class="btn btn-default btn-block w-100" style="text-align:center" font="15">Jumlah User: {{jumlahUser}} Jumlah Mentor : {{jumlahMentor}} Jumlah Kelas: {{jumlahKelas}}</h4>
+
     </div>
 </template>
 
@@ -29,6 +32,9 @@ export default {
     data() {
         return {
             transactions: [],
+            jumlahUser: 0,
+            jumlahMentor:0,
+            jumlahKelas:0,
             options: {},
             series: [],
         }
@@ -94,6 +100,10 @@ export default {
         axios.get('/transaction')
         .then(r => {
             this.transactions = r.data.body;
+            this.jumlahUser = r.data.jumlahUser;
+            this.jumlahKelas = r.data.jumlahKelas;
+            this.jumlahMentor = r.data.jumlahMentor;
+
             this.dataWeek();
         })
     }

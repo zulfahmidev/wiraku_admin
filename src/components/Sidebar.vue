@@ -1,13 +1,15 @@
 <template>
-    <section id="sidebar">
-        <div class="inner">
+    <section id="sidebar" >
+        <div class="inner" >
             <div class="header">
                 <div class="avatar">
-                    <img :src="'../../wiraku/public/upload/user/profile_image/'+profile_image" class="wf-media" alt="avatar">
+                    <!-- <img :src="'../../wiraku/public/upload/user/profile_image/'+profile_image" class="wf-media" alt="avatar"> -->
+                    <img src="/img/admin.jfif"  class="wf-media" alt="Logo Wiraku">
                 </div>
                 <div class="name">{{name}}</div>
             </div>
-            <div class="navs">
+            <div class="navs"  >
+                
                 <SidebarNav name="Dashboard" text="Dashboard" icon="fa-tachometer-alt" />
                 <SidebarNav v-if="isRole('admin')" name="Courses" text="Kelas" icon="fa-chalkboard" />
                 <SidebarNav v-if="isRole('admin')" name="Mentors" text="Mentor" icon="fa-user-tie"/>

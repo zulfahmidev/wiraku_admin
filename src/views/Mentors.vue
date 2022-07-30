@@ -36,7 +36,9 @@
                         <td>{{ i+1 }}</td>
                         <td>{{ v.name }}</td>
                         <td>{{ v.email }}</td>
-                        <td>{{ (v.category != null) ? v.category.name : 'Tidak Punya' }}</td>
+                         <td>{{ v.profession }}</td>
+
+                        
                         <td>
                             <div class="btn btn-danger btn-sm" @click="deleteMentor(i,v.id)"><i class="fa fa-fw fa-trash"></i></div>
                         </td>
