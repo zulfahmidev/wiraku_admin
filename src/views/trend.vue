@@ -12,7 +12,8 @@
             <div class="row">
                 <div class="col-lg-9">
                     <h2>Trend Tooday!</h2>
-                     <p class="small text-black-50">Mari Perbarui Trend Setiap Hari!</p>
+                     <p class="col-lg-9">Mari Perbarui Trend Setiap Hari!</p>
+                      <h5  style="text-align: left" class="btn btn-default btn-block w-80">Note : Hapus data sebelumnya jika ingin mengambil data tweet Baru</h5>
                   
                 </div>
 
@@ -53,16 +54,16 @@
                 <hr>
                 <div class="row mt-3 ">
                 </div>
-                <div class="col-lg-4" style="text-align: right" >
-                         <button class="btn btn-default btn-block w-100" @click="AmbilData">Ambil data Twitter</button>
+                <div class="col-lg-4" style="text-align: right">
+                         <button class="btn btn-default btn-block w-100" @click="ambildata">Ambil Data Tweet</button>
                  </div>
 
-                <div class="col-lg-4" style="text-align: right">
-                         <button class="btn btn-default btn-block w-100" @click="AmbilData">Perbarui data Trend</button>
+                  <div class="col-lg-4" style="text-align: right">
+                         <button class="btn btn-default btn-block w-100" @click="aa">Perbarui Trend </button>
                  </div>
             
                 <div class="col-lg-4" style="text-align: right">
-                         <button class="btn btn-default btn-block w-100" onclick="<?php $command = escapeshellcmd('python3 ppy\deteksitopik.py'); $output = shell_exec($command); echo $output; ?>">Perbarui Model </button>
+                         <button class="btn btn-default btn-block w-100" @click="updatetweet">Perbarui Trend </button>
                  </div>
                     
                     
@@ -98,20 +99,32 @@ export default {
                 });
            },
              AmbilData() {
-            axios.get('/user/changepassword', this.change_password_form)
-            .then(r => {
-                console.dir(r);
-                this.change_password_form = {
-                    old_password: '',
-                    new_password: '',
-                    confirm_new_password: '',
-                }
+            axios.get("/ambildata").then(() => {
+                    swal({
+                        title: "Data Sedang Diambil",
+                        text: " Silahkan cek Direktori D:1tga/ppy Data trend.xlxs",
+                        icon: "success",
+                        button: "Baik",
+                    });
+            })
+            .catch(e => {
+                console.dir(e);
                 swal({
-                    title: "Berhasil",
-                    text: r.data.message,
-                    icon: "success",
+                    title: "Gagal",
+                    text: e.response.data.message,
+                    icon: "danger",
                     button: "Baik",
                 });
+            })
+        }, 
+        updatetweet() {
+            axios.get("/perbaruitrend").then(() => {
+                    swal({
+                        title: "Trend Sedang Diupdate!",
+                        text: "reload halaman 5 menit dari sekarang",
+                        icon: "success",
+                        button: "Baik",
+                    });
             })
             .catch(e => {
                 console.dir(e);

@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 
-                <div class="form-group my-2">
+                <!-- <div class="form-group my-2">
                         <label for="">course_id:</label>
                         <input type="text" v-model="result.course_id" placeholder="Ketik disini..." class="form-control">
                         <div class="small text-danger" v-for="(v,i) in errors.detail.course_id" :key="i">{{ v }}</div>
@@ -41,7 +41,7 @@
                         <input type="text" v-model="result.keterangan" placeholder="Ketik disini..." class="form-control">
                         <div class="small text-danger" v-for="(v,i) in errors.detail.keterangan" :key="i">{{ v }}</div>
                     </div>
-                    <div class="btn btn-default mt-2 btn-block w-100" @click="tambahpengeluaran">Tambah Pengeluaran</div>
+                    <div class="btn btn-default mt-2 btn-block w-100" @click="tambahpengeluaran">Tambah Pengeluaran</div> -->
             </div>
             <table id="transactions_table" class="table table-striped mt-3">
                 <thead>
@@ -49,10 +49,9 @@
                         <th>#</th>
                       
                         <th>Kode Kelas</th>
-                        <th>Pengeluaran</th>
                         <th>Pemasukan</th>
-                        <th>Saldo</th>
-                        <th>Keterangan</th>
+                        <!-- <th>Saldo</th> -->
+                        <!-- <th>Keterangan</th> -->
                         <th>Tanggal Update</th>
                     </tr>
                 </thead>
@@ -60,9 +59,9 @@
                     <tr v-for="(v,i) in datakeuangan" :key="i">
                         <td>{{i+1}}</td>
                         <td>{{ v.course_id}}</td>
-                        <td>{{ v.pengeluaran }}</td>
+                        <!-- <td>{{ v.pengeluaran }}</td> -->
                         <td>{{ v.pemasukan }}</td>
-                        <td>{{ v.saldo }}</td>
+                        <!-- <td>{{ v.saldo }}</td> -->
                         <td>{{ v.keterangan }}</td>
                         <td>{{date_format(v.created_at)}}</td>
                    
@@ -76,17 +75,12 @@
 
 <script>
 import axios from 'axios';
-import swal from 'sweetalert';
+
 export default {
     data() {
         return {
             result: {},
-              detail: {
-                    course_id: [],
-                    pemasukan: [],
-                    pengeluaran: [],
-                    keterangan: [],
-              },
+             
             datakeuangan:[]
             
         }
@@ -104,42 +98,7 @@ export default {
             let date = new Date(v);
             return `${date.getDate()}-${date.getMonth()}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
         },
-           tambahpengeluaran() {
-            axios.post('/tambahpengeluaran', {
-                course_id: this.result.course_id,
-                pemasukan: this.result.pemasukan,
-                pengeluaran: this.result.pengeluaran,
-                keteranga: this.keterangan,
-                
-            }).then(() => {
-                // Berhasil
-                swal({
-                    title: "Berhasil",
-                    text: "Perubahan Telah Disimpan!",
-                    icon: "success",
-                    button: "Baik",
-                });
-            }).catch(e => {
-                console.dir(e);
-                let r = e.response;
-                this.errors.detail = {
-                    name: [],
-                    price: [],
-                    description: [],
-                    email_mentor: [],
-                };
-                if (r.status == 403) {
-                    let data = e.response.data.body;
-                    for (const key in data) {
-                        if (Object.hasOwnProperty.call(data, key)) {
-                            const val = data[key];
-                            this.errors.detail[key] = val;
-                        }
-                    }
-                }
-            })
-        }
-  
+          
     },
     mounted(){
         this.getdata()

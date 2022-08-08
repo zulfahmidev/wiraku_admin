@@ -15,6 +15,8 @@ import Settings from '../views/Settings.vue';
 import SettingCategory from '../views/settings/SettingCategory.vue';
 import SettingAccount from '../views/settings/SettingAccount.vue';
 import tambahpengeluaran from '../views/lapkeuangan.vue'
+import ambildata from '../views/trend.vue'
+import perbaruitrend from '../views/trend.vue'
 
 const router = createRouter({
   history: createWebHistory('/'),
@@ -121,6 +123,16 @@ const router = createRouter({
       path:'/tambahpengeluaran',
       name:'pengeluaran',
       component :tambahpengeluaran
+    },
+    {
+      path:'/ambildata',
+      name:'ambildata',
+      component :ambildata
+    },
+    {
+      path:'/perbaruitrend',
+      name:'perbaruitrend',
+      component : perbaruitrend
     }
   ]
 })
